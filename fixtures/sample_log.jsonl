@@ -1,0 +1,13 @@
+{"type": "night", "round": 0, "wolves": "David", "doctor": "Ginger", "seer_target": "Tyler", "seer_reveal": "Doctor"}
+{"type": "debate", "round": 0, "speaker": "Tyler", "utterance": "Stay calm; let's avoid rash votes."}
+{"type": "debate", "round": 0, "speaker": "Scott", "utterance": "I suspect Tyler is acting strange."}
+{"type": "debate", "round": 0, "speaker": "Derek", "utterance": "I need more evidence before voting decisively."}
+{"type": "debate", "round": 0, "speaker": "Isaac", "utterance": "I need more evidence before voting decisively."}
+{"type": "votes", "round": 0, "votes": {"Scott": "Derek", "Hayley": "Derek", "Tyler": "Jacob", "Isaac": "Jacob", "Ginger": "Hayley", "Jacob": "Tyler", "Derek": "Isaac"}}
+{"type": "night", "round": 1, "wolves": "Tyler", "doctor": "Isaac", "seer_target": null, "seer_reveal": null}
+{"type": "debate", "round": 1, "speaker": "Scott", "utterance": "I suspect someone quiet is acting strange."}
+{"type": "debate", "round": 1, "speaker": "Ginger", "utterance": "I need more evidence before voting decisively."}
+{"type": "debate", "round": 1, "speaker": "Derek", "utterance": "I need more evidence before voting decisively."}
+{"type": "debate", "round": 1, "speaker": "Derek", "utterance": "I need more evidence before voting decisively."}
+{"type": "votes", "round": 1, "votes": {"Scott": "Isaac", "Hayley": "Ginger", "Isaac": "Derek", "Ginger": "Isaac", "Derek": "Ginger"}}
+{"type": "summary", "winner": "Werewolves", "seed": 123}

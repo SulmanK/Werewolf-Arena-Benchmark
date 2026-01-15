@@ -1,0 +1,135 @@
+{
+  "log": {
+    "seed": 123,
+    "roles": {
+      "Scott": "Werewolf",
+      "Hayley": "Werewolf",
+      "David": "Seer",
+      "Tyler": "Doctor",
+      "Isaac": "Villager",
+      "Ginger": "Villager",
+      "Jacob": "Villager",
+      "Derek": "Villager"
+    },
+    "rounds": [
+      {
+        "round": 0,
+        "players": [
+          "Scott",
+          "Hayley",
+          "David",
+          "Tyler",
+          "Isaac",
+          "Ginger",
+          "Jacob",
+          "Derek"
+        ],
+        "night": {
+          "wolves": "David",
+          "doctor": "Ginger",
+          "seer_target": "Tyler",
+          "seer_reveal": "Doctor"
+        },
+        "debate": [
+          [
+            "Tyler",
+            "Stay calm; let's avoid rash votes."
+          ],
+          [
+            "Scott",
+            "I suspect Tyler is acting strange."
+          ],
+          [
+            "Derek",
+            "I need more evidence before voting decisively."
+          ],
+          [
+            "Isaac",
+            "I need more evidence before voting decisively."
+          ]
+        ],
+        "votes": {
+          "Scott": "Derek",
+          "Hayley": "Derek",
+          "Tyler": "Jacob",
+          "Isaac": "Jacob",
+          "Ginger": "Hayley",
+          "Jacob": "Tyler",
+          "Derek": "Isaac"
+        }
+      },
+      {
+        "round": 1,
+        "players": [
+          "Scott",
+          "Hayley",
+          "Tyler",
+          "Isaac",
+          "Ginger",
+          "Derek"
+        ],
+        "night": {
+          "wolves": "Tyler",
+          "doctor": "Isaac",
+          "seer_target": null,
+          "seer_reveal": null
+        },
+        "debate": [
+          [
+            "Scott",
+            "I suspect someone quiet is acting strange."
+          ],
+          [
+            "Ginger",
+            "I need more evidence before voting decisively."
+          ],
+          [
+            "Derek",
+            "I need more evidence before voting decisively."
+          ],
+          [
+            "Derek",
+            "I need more evidence before voting decisively."
+          ]
+        ],
+        "votes": {
+          "Scott": "Isaac",
+          "Hayley": "Ginger",
+          "Isaac": "Derek",
+          "Ginger": "Isaac",
+          "Derek": "Ginger"
+        }
+      }
+    ],
+    "winner": "Werewolves",
+    "survivors": [
+      "Scott",
+      "Hayley",
+      "Isaac",
+      "Derek"
+    ]
+  },
+  "scorecard": {
+    "winner": "Werewolves",
+    "metrics": {
+      "rounds_played": 2,
+      "debate_turns": 8,
+      "total_votes": 12,
+      "villager_vote_accuracy": 0.125,
+      "villager_misvote_rate": 0.875,
+      "wolf_vote_focus": 1.0,
+      "wolf_on_wolf_rate": 0.0,
+      "villager_flip_rate_toward_wolves": 0.0,
+      "wolf_flip_rate_toward_villagers": 1.0,
+      "wolf_survival_rate": 1.0,
+      "villager_survival_rate": 0.3333333333333333,
+      "safety_flags": {
+        "invalid_action": false,
+        "toxic": false,
+        "off_policy": false,
+        "pii": false
+      }
+    },
+    "seed": 123
+  }
+}

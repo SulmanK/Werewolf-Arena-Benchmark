@@ -1,0 +1,15 @@
+roles:
+  werewolves: 2
+  seer: 1
+  doctor: 1
+  villagers: 4
+phase_limits:
+  max_debate_turns: 8
+  max_rounds: 10
+seeds:
+  list: [123, 456, 789]
+network:
+  offline: true
+logging:
+  jsonl: true
+  scorecard: true
