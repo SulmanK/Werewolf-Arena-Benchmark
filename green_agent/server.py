@@ -1,0 +1,168 @@
+"""
+Green agent A2A server for AgentBeats evaluation.
+
+Runs the benchmark.agent_vs_npc pipeline using the provided purple agent endpoint.
+"""
+
+import argparse
+import json
+import os
+import subprocess
+import sys
+from typing import Any, Dict, Optional
+
+import uvicorn
+from a2a.server.apps import A2AStarletteApplication
+from a2a.server.request_handlers import DefaultRequestHandler
+from a2a.server.agent_execution import AgentExecutor, RequestContext
+from a2a.server.events import EventQueue
+from a2a.server.tasks import InMemoryTaskStore, TaskUpdater
+from a2a.types import AgentCard, AgentCapabilities, AgentSkill, Part, DataPart
+from a2a.utils import new_task, new_agent_text_message
+
+
+def _get_message_text(context: RequestContext) -> str:
+    msg = context.message
+    if not msg:
+        return ""
+    parts = msg.parts or []
+    for part in parts:
+        root = getattr(part, "root", None)
+        if root is None:
+            continue
+        if hasattr(root, "text") and root.text:
+            return root.text
+        if hasattr(root, "data") and root.data is not None:
+            return json.dumps(root.data)
+    return ""
+
+
+def _run_agent_vs_npc(payload: Dict[str, Any]) -> Dict[str, Any]:
+    participant = payload.get("participant")
+    if not participant:
+        raise ValueError("Missing required field: participant")
+
+    config = payload.get("config", {})
+    num_games = int(config.get("num_games", config.get("num_tasks", 40)))
+    shuffle_seed = int(config.get("shuffle_seed", 20206))
+    max_rounds = int(config.get("max_rounds", 10))
+    max_turns = int(config.get("max_turns", 8))
+    role_weights = str(config.get("role_weights", ""))
+    seed_start = int(config.get("seed_start", 1000))
+
+    output_path = config.get("output", "/app/results/agentbeats_results.json")
+    log_dir = config.get("log_dir", "/app/results/agentbeats_logs")
+
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+    os.makedirs(log_dir, exist_ok=True)
+
+    cmd = [
+        sys.executable,
+        "-m",
+        "benchmark.agent_vs_npc",
+        "--a2a-endpoint",
+        participant,
+        "--num-games",
+        str(num_games),
+        "--shuffle-seed",
+        str(shuffle_seed),
+        "--max-rounds",
+        str(max_rounds),
+        "--max-turns",
+        str(max_turns),
+        "--seed-start",
+        str(seed_start),
+        "--output",
+        output_path,
+        "--log-dir",
+        log_dir,
+    ]
+    if role_weights:
+        cmd.extend(["--role-weights", role_weights])
+
+    proc = subprocess.run(cmd, capture_output=True, text=True, check=False)
+    if proc.returncode != 0:
+        raise RuntimeError(
+            f"agent_vs_npc failed (code {proc.returncode}): {proc.stderr.strip()}"
+        )
+
+    # Prefer output file, fall back to stdout JSON.
+    if os.path.exists(output_path):
+        with open(output_path, "r", encoding="utf-8") as f:
+            return json.load(f)
+
+    # Try to parse last JSON object from stdout.
+    lines = [l for l in proc.stdout.splitlines() if l.strip()]
+    if lines:
+        return json.loads(lines[-1])
+    raise RuntimeError("No output produced by agent_vs_npc")
+
+
+class WerewolfGreenExecutor(AgentExecutor):
+    async def execute(self, context: RequestContext, event_queue: EventQueue) -> None:
+        task = context.current_task
+        if not task:
+            task = new_task(context.message)
+            await event_queue.enqueue_event(task)
+
+        updater = TaskUpdater(event_queue, task.id, task.context_id)
+        await updater.start_work()
+
+        try:
+            raw = _get_message_text(context)
+            payload = json.loads(raw) if raw else {}
+            result = _run_agent_vs_npc(payload)
+
+            await updater.add_artifact(
+                [Part(root=DataPart(kind="data", data=result))]
+            )
+            await updater.complete()
+        except Exception as e:
+            await updater.failed(new_agent_text_message(f"Green agent error: {e}"))
+
+    async def cancel(self, context: RequestContext, event_queue: EventQueue) -> None:
+        raise NotImplementedError
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description="Werewolf Green Agent (A2A)")
+    parser.add_argument("--host", type=str, default="0.0.0.0")
+    parser.add_argument("--port", type=int, default=9009)
+    args = parser.parse_args()
+
+    skill = AgentSkill(
+        id="werewolf-evaluator",
+        name="Werewolf Evaluator",
+        description="Evaluates a purple agent against NPCs and returns scorecard JSON",
+        tags=["gaming", "evaluation", "social-deduction"],
+    )
+
+    public_url = os.environ.get("GREEN_AGENT_PUBLIC_URL", "").strip()
+    card_url = public_url or f"http://{args.host}:{args.port}"
+
+    card = AgentCard(
+        name="Werewolf Green Agent",
+        version="1.0.0",
+        description="Green agent for AgentBeats Werewolf benchmark",
+        url=card_url,
+        protocol_version="0.3.0",
+        skills=[skill],
+        capabilities=AgentCapabilities(streaming=False),
+        defaultInputModes=["text"],
+        defaultOutputModes=["text"],
+    )
+
+    request_handler = DefaultRequestHandler(
+        agent_executor=WerewolfGreenExecutor(),
+        task_store=InMemoryTaskStore(),
+    )
+    app = A2AStarletteApplication(
+        agent_card=card,
+        http_handler=request_handler,
+    )
+
+    uvicorn.run(app.build(), host=args.host, port=args.port, log_level="info")
+
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,70 @@
+version: "3.8"
+
+services:
+  purple_agent:
+    image: agentbeats_purple_agent
+    build:
+      context: ..
+      dockerfile: infra/Dockerfile.purple
+    container_name: agentbeats_purple_agent
+    env_file:
+      - ../.env
+    ports:
+      - "8100:8100"
+    networks:
+      - agentbeats_network
+    healthcheck:
+      test: [ "CMD", "python", "-c", "import socket; s=socket.create_connection(('localhost',8100),2); s.close()" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+  green_agent:
+    image: agentbeats_green_agent
+    build:
+      context: ..
+      dockerfile: infra/Dockerfile.green
+    container_name: agentbeats_green_agent
+    env_file:
+      - ../.env
+    environment:
+      - GREEN_AGENT_PUBLIC_URL=http://green_agent:9009
+    ports:
+      - "9009:9009"
+    volumes:
+      - ../results:/app/results
+    depends_on:
+      purple_agent:
+        condition: service_healthy
+    networks:
+      - agentbeats_network
+    healthcheck:
+      test: [ "CMD", "python", "-c", "import httpx; httpx.get('http://localhost:9009/.well-known/agent-card.json')" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+  runner:
+    image: agentbeats_runner
+    build:
+      context: ..
+      dockerfile: infra/Dockerfile.green
+    container_name: agentbeats_runner
+    depends_on:
+      green_agent:
+        condition: service_healthy
+    networks:
+      - agentbeats_network
+    environment:
+      - GREEN_AGENT_URL=http://green_agent:9009
+      - PURPLE_AGENT_URL=http://purple_agent:8100
+      - NUM_TASKS=40
+    command: python run_agentbeats_docker.py
+    volumes:
+      - ../results:/app/results
+
+networks:
+  agentbeats_network:
+    driver: bridge

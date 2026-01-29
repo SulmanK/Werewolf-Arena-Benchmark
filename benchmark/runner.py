@@ -16,13 +16,20 @@ def main():
     parser.add_argument("--max-turns", type=int, default=8, help="Max debate turns per round")
     parser.add_argument("--max-rounds", type=int, default=10, help="Max rounds before timeout")
     parser.add_argument("--a2a-endpoint", type=str, default="", help="Optional A2A agent endpoint (overrides scripted actions)")
+    parser.add_argument("--a2a-seats", type=str, default="", help="Comma-separated player names to route to A2A (Agent vs NPC)")
+    parser.add_argument("--a2a-roles", type=str, default="", help="Comma-separated role names to route to A2A (Agent vs NPC)")
     args = parser.parse_args()
+
+    a2a_seats = [s.strip() for s in args.a2a_seats.split(",") if s.strip()]
+    a2a_roles = [r.strip() for r in args.a2a_roles.split(",") if r.strip()]
 
     result = game.run_game({
         "seed": args.seed,
         "max_debate_turns": args.max_turns,
         "max_rounds": args.max_rounds,
         "a2a_endpoint": args.a2a_endpoint,
+        "a2a_seats": a2a_seats,
+        "a2a_roles": a2a_roles,
     })
     scorecard = score.score_game(result)
     if args.log_jsonl:

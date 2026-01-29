@@ -4,4 +4,9 @@ pyyaml==6.0.2
 requests==2.32.3
 google-generativeai==0.8.3
 python-dotenv[cli]==1.0.1
+a2a-sdk[http-server]>=0.3.20
+fastapi==0.115.6
+uvicorn[standard]==0.30.6
+httpx==0.28.1
+pydantic==2.11.3
 

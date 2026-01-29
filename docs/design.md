@@ -50,6 +50,7 @@
 - Deterministic games with fixed seeds and published configs (player/role counts, utterance caps, timers).
 - Phases: Day chat -> Vote -> Night actions -> Resolution; enforce action legality and turn order.
 - Fixtures: short games for CI and full-length evaluation suites.
+- Agent vs NPC baseline mode: see `docs/design_agent_vs_npc.md`.
 
 ## 6) Evaluation & Scoring
 - Core metrics: win rate by role, vote accuracy (wolves identified by day N), deception success/failure (wolves causing misvotes), persuasion robustness (villager flip rate after misleading statements), efficiency (turns/steps to resolution).

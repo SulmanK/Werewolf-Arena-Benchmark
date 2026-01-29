@@ -1,5 +1,6 @@
 """Adapter for communicating with external A2A agents (HTTP JSON)."""
 
+import os
 import requests
 from typing import Dict, Any
 
@@ -10,7 +11,8 @@ class A2AClient:
 
     def send_action(self, observation: Dict[str, Any]) -> Dict[str, Any]:
         """Send observation to external agent and return parsed action."""
-        resp = requests.post(self.url, json=observation, timeout=10)
+        timeout = float(os.environ.get("A2A_TIMEOUT", "30"))
+        resp = requests.post(self.url, json=observation, timeout=timeout)
         resp.raise_for_status()
         return resp.json()
 
@@ -24,6 +26,14 @@ class A2AAgent:
         self.seed = seed
         self.client = client
         self.alive = True
+        self.seer_checks = []
+
+    def _private_obs(self, wolves):
+        if self.role == "Werewolf":
+            return {"wolves": wolves or []}
+        if self.role == "Seer":
+            return {"seer_checks": list(self.seer_checks)}
+        return {}
 
     def speak(self, debate_history, round_num=0, alive_players=None, graveyard=None, wolves=None):
         obs = {
@@ -35,12 +45,12 @@ class A2AAgent:
             "remaining_players": alive_players or [],
             "graveyard": graveyard or [],
             "public_debate": debate_history,
-            "private": {"wolves": wolves or []},
+            "private": self._private_obs(wolves),
         }
         action = self.client.send_action(obs)
         return action.get("content", "")
 
-    def vote(self, players, round_num=0, graveyard=None, wolves=None):
+    def vote(self, players, debate_history=None, round_num=0, graveyard=None, wolves=None):
         obs = {
             "round": round_num,
             "phase": "day_vote",
@@ -49,8 +59,8 @@ class A2AAgent:
             "seed": self.seed,
             "remaining_players": players or [],
             "graveyard": graveyard or [],
-            "public_debate": [],
-            "private": {"wolves": wolves or []},
+            "public_debate": debate_history or [],
+            "private": self._private_obs(wolves),
         }
         action = self.client.send_action(obs)
         return action.get("target")
@@ -65,7 +75,7 @@ class A2AAgent:
             "remaining_players": players or [],
             "graveyard": graveyard or [],
             "public_debate": [],
-            "private": {"wolves": wolves if self.role == "Werewolf" else []},
+            "private": self._private_obs(wolves),
         }
         action = self.client.send_action(obs)
         return action.get("target")
@@ -74,5 +84,4 @@ class A2AAgent:
         self.alive = False
 
     def update_seer_inspection(self, target: str, role: str):
-        # No local memory for A2A agents; seer info could be passed via private obs if desired.
-        return
+        self.seer_checks.append({"target": target, "role": role})

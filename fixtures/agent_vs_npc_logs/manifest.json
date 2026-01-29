@@ -1,0 +1,218 @@
+[
+  {
+    "game_index": 0,
+    "seed": 1000,
+    "shuffle_seed": 20206,
+    "agent_seat": "Derek",
+    "agent_role": "Villager",
+    "winner": "Villagers",
+    "roles": {
+      "Hayley": "Werewolf",
+      "Scott": "Werewolf",
+      "Ginger": "Seer",
+      "Jacob": "Doctor",
+      "Isaac": "Villager",
+      "Derek": "Villager",
+      "David": "Villager",
+      "Tyler": "Villager"
+    }
+  },
+  {
+    "game_index": 1,
+    "seed": 1001,
+    "shuffle_seed": 20206,
+    "agent_seat": "Isaac",
+    "agent_role": "Doctor",
+    "winner": "Villagers",
+    "roles": {
+      "Jacob": "Werewolf",
+      "David": "Werewolf",
+      "Hayley": "Seer",
+      "Isaac": "Doctor",
+      "Ginger": "Villager",
+      "Scott": "Villager",
+      "Tyler": "Villager",
+      "Derek": "Villager"
+    }
+  },
+  {
+    "game_index": 2,
+    "seed": 1002,
+    "shuffle_seed": 20206,
+    "agent_seat": "Derek",
+    "agent_role": "Werewolf",
+    "winner": "Villagers",
+    "roles": {
+      "Isaac": "Werewolf",
+      "Derek": "Werewolf",
+      "Hayley": "Seer",
+      "Jacob": "Doctor",
+      "David": "Villager",
+      "Ginger": "Villager",
+      "Scott": "Villager",
+      "Tyler": "Villager"
+    }
+  },
+  {
+    "game_index": 3,
+    "seed": 1003,
+    "shuffle_seed": 20206,
+    "agent_seat": "Isaac",
+    "agent_role": "Doctor",
+    "winner": "Villagers",
+    "roles": {
+      "Derek": "Werewolf",
+      "David": "Werewolf",
+      "Tyler": "Seer",
+      "Isaac": "Doctor",
+      "Scott": "Villager",
+      "Jacob": "Villager",
+      "Hayley": "Villager",
+      "Ginger": "Villager"
+    }
+  },
+  {
+    "game_index": 4,
+    "seed": 1004,
+    "shuffle_seed": 20206,
+    "agent_seat": "Ginger",
+    "agent_role": "Seer",
+    "winner": "Villagers",
+    "roles": {
+      "Jacob": "Werewolf",
+      "Isaac": "Werewolf",
+      "Ginger": "Seer",
+      "Scott": "Doctor",
+      "Hayley": "Villager",
+      "David": "Villager",
+      "Derek": "Villager",
+      "Tyler": "Villager"
+    }
+  },
+  {
+    "game_index": 5,
+    "seed": 1005,
+    "shuffle_seed": 20206,
+    "agent_seat": "Jacob",
+    "agent_role": "Seer",
+    "winner": "Villagers",
+    "roles": {
+      "Derek": "Werewolf",
+      "Scott": "Werewolf",
+      "Jacob": "Seer",
+      "David": "Doctor",
+      "Hayley": "Villager",
+      "Isaac": "Villager",
+      "Tyler": "Villager",
+      "Ginger": "Villager"
+    }
+  },
+  {
+    "game_index": 6,
+    "seed": 1006,
+    "shuffle_seed": 20206,
+    "agent_seat": "Tyler",
+    "agent_role": "Doctor",
+    "winner": "Villagers",
+    "roles": {
+      "Jacob": "Werewolf",
+      "Ginger": "Werewolf",
+      "Hayley": "Seer",
+      "Tyler": "Doctor",
+      "Isaac": "Villager",
+      "Scott": "Villager",
+      "Derek": "Villager",
+      "David": "Villager"
+    }
+  },
+  {
+    "game_index": 7,
+    "seed": 1007,
+    "shuffle_seed": 20206,
+    "agent_seat": "Hayley",
+    "agent_role": "Villager",
+    "winner": "Villagers",
+    "roles": {
+      "David": "Werewolf",
+      "Ginger": "Werewolf",
+      "Isaac": "Seer",
+      "Jacob": "Doctor",
+      "Scott": "Villager",
+      "Hayley": "Villager",
+      "Tyler": "Villager",
+      "Derek": "Villager"
+    }
+  },
+  {
+    "game_index": 8,
+    "seed": 1008,
+    "shuffle_seed": 20206,
+    "agent_seat": "Scott",
+    "agent_role": "Werewolf",
+    "winner": "Villagers",
+    "roles": {
+      "Scott": "Werewolf",
+      "Isaac": "Werewolf",
+      "Tyler": "Seer",
+      "Hayley": "Doctor",
+      "David": "Villager",
+      "Derek": "Villager",
+      "Jacob": "Villager",
+      "Ginger": "Villager"
+    }
+  },
+  {
+    "game_index": 9,
+    "seed": 1009,
+    "shuffle_seed": 20206,
+    "agent_seat": "Scott",
+    "agent_role": "Werewolf",
+    "winner": "Villagers",
+    "roles": {
+      "Scott": "Werewolf",
+      "Ginger": "Werewolf",
+      "Hayley": "Seer",
+      "David": "Doctor",
+      "Tyler": "Villager",
+      "Isaac": "Villager",
+      "Derek": "Villager",
+      "Jacob": "Villager"
+    }
+  },
+  {
+    "game_index": 10,
+    "seed": 1010,
+    "shuffle_seed": 20206,
+    "agent_seat": "Scott",
+    "agent_role": "Seer",
+    "winner": "Villagers",
+    "roles": {
+      "Jacob": "Werewolf",
+      "David": "Werewolf",
+      "Scott": "Seer",
+      "Tyler": "Doctor",
+      "Ginger": "Villager",
+      "Derek": "Villager",
+      "Hayley": "Villager",
+      "Isaac": "Villager"
+    }
+  },
+  {
+    "game_index": 11,
+    "seed": 1011,
+    "shuffle_seed": 20206,
+    "agent_seat": "Jacob",
+    "agent_role": "Villager",
+    "winner": "Villagers",
+    "roles": {
+      "Ginger": "Werewolf",
+      "Hayley": "Werewolf",
+      "Tyler": "Seer",
+      "Scott": "Doctor",
+      "Isaac": "Villager",
+      "Derek": "Villager",
+      "Jacob": "Villager",
+      "David": "Villager"
+    }
+  }
+]
