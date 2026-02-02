@@ -13,6 +13,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY benchmark/ ./benchmark/
 COPY agents/ ./agents/
+COPY core/ ./core/
 COPY scorer/ ./scorer/
 COPY scripts/ ./scripts/
 COPY configs/ ./configs/

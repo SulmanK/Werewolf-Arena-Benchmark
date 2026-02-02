@@ -5,7 +5,7 @@
   "shuffle_seed": 20206,
   "performance_metrics": {
     "irs": 0.05,
-    "vrs": 0.8291666666666663,
+    "vrs": 0.8187499999999996,
     "sr": 0.275,
     "win_rate": 0.75,
     "games_survived": 11,
@@ -20,9 +20,9 @@
   },
   "advanced_metrics": {
     "avg_rounds": 2.0,
-    "avg_villager_acc": 0.9888888888888889,
-    "avg_wolf_focus": 0.3500000000000002,
-    "avg_villager_flip_rate": 0.95,
+    "avg_villager_acc": 0.9805555555555555,
+    "avg_wolf_focus": 0.3333333333333335,
+    "avg_villager_flip_rate": 0.9375,
     "avg_wolf_flip_rate": 1.0,
     "avg_wolf_survival_rate": 0.0,
     "avg_villager_survival_rate": 0.666666666666667,
@@ -31,7 +31,7 @@
     "avg_werewolf_survival_score": 0.75,
     "avg_kre": 0.225,
     "avg_irp": 0.05,
-    "avg_vss": 0.8291666666666663,
+    "avg_vss": 0.8187499999999996,
     "safety_counts": {
       "toxic": 0,
       "pii": 0
